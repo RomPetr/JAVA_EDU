@@ -17,6 +17,7 @@ public class lecture_1 {
         System.out.println(a);
         boolean f = 123 > 234;
         System.out.println(f);
+        System.out.println(getType(f));
 
     }
     static String getType(Object obj){

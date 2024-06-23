@@ -3,7 +3,7 @@
 Дано четное число N (>0) и символы c1 и c2.
 Написать метод, который вернет строку длины N, которая
 состоит из чередующихся символов c1 и c2, начиная с c1. 
-*/
+
 
 import java.security.PublicKey;
 
@@ -38,6 +38,63 @@ public class seminar_2 {
         }
 
         return sb.toString();
+    }
 }
+*/
 
+/*
+Задание №2
+Напишите метод, который сжимает строку.
+Пример: вход aaaabbbcdd. 
+Результат a3b4c1d2
+
+
+// Решение ИИ
+public class seminar_2 {
+    public static void main(String[] args) {
+        String str = "aaaabbbcdd";
+        System.out.println(compress(str));
+    }
+
+    public static String compress(String str) {
+        StringBuilder sb = new StringBuilder();
+        int count = 1;
+        for(int i = 0; i < str.length() - 1; i++) {
+            if(str.charAt(i) == str.charAt(i + 1)) {
+                count++;
+            } else {
+                sb.append(str.charAt(i)).append(count);
+                count = 1;
+            }
+        }
+        sb.append(str.charAt(str.length() - 1)).append(count);
+        return sb.toString();
+    }
+}
+*/
+
+// решение в группе
+public class seminar_2 {
+    public static void main(String[] args) {
+        String str = "aaaabbbcdd";
+        System.out.println(compressString(str));
+    }
+
+    public static String compressString(String str) {
+        StringBuilder res = new StringBuilder();
+        int count = 1;
+        char currentChar = str.charAt(0);
+
+        for (int i = 1; i < str.length(); i++) {
+            if (str.charAt(i) == currentChar) {
+                count++;
+            } else {
+                res.append(currentChar).append(count);
+                currentChar = str.charAt(i);
+                count = 1;
+            }
+        }
+        res.append(currentChar).append(count);
+        return res.toString();
+    }
 }

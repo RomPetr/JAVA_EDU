@@ -2,3 +2,5 @@
 INFO: Данные успешно записаны
 июн. 23, 2024 2:02:19 PM seminar_2 writeArrayToFile
 INFO: Данные успешно записаны
+июн. 23, 2024 2:06:52 PM seminar_2 writeArrayToFile
+INFO: Данные успешно записаны

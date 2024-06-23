@@ -1,0 +1,9 @@
+log.txt.lck
+seminar_1.java
+text.txt
+log.txt
+seminar_2.java
+README.md
+FileList.txt
+.git
+lecture_1.java

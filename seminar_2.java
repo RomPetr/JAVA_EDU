@@ -71,7 +71,7 @@ public class seminar_2 {
         return sb.toString();
     }
 }
-*/
+
 
 // решение в группе
 public class seminar_2 {
@@ -97,4 +97,47 @@ public class seminar_2 {
         res.append(currentChar).append(count);
         return res.toString();
     }
+}
+*/
+
+/*
+Задание №3
+Напишите метод, который принимает на вход строку (String) и
+определяет является ли строка палиндромом (возвращает boolean значение). 
+
+
+// решение ИИ
+public class seminar_2 {
+    public static void main(String[] args) {
+        String str = "А роза упала на лапу Азора";
+        System.out.println(isPalindrome(str));
+    }
+
+    public static boolean isPalindrome(String str) {
+        StringBuilder sb = new StringBuilder(str);
+        sb.reverse();
+        return str.equals(sb.toString());
+    }
+}
+*/
+// решение в группе
+
+public class seminar_2 {
+
+    public static void main(String[] args) {
+        
+        String word = "довод";
+        System.out.println(isPalindrom(word));
+    }
+
+    public static boolean isPalindrom(String inputStr) {
+        for (int i = 0; i < inputStr.length() / 2; i++) {
+            if (inputStr.charAt(i) != inputStr.charAt(inputStr.length() -1 - i)) {
+                return false;
+            }
+
+        }
+        return true;
+    }
+
 }

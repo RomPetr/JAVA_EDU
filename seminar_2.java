@@ -24,7 +24,7 @@ public class seminar_2 {
 
     public static String alternatingCharsStr(int n, char c1, char c2) {
         String str = "";
-        for(int i = 0; i < n /2; i++) {
+        for(int i = 0; i < n / 2; i++) {
             str = str + c1 + c2;
         
         }
@@ -46,7 +46,7 @@ public class seminar_2 {
 Задание №2
 Напишите метод, который сжимает строку.
 Пример: вход aaaabbbcdd. 
-Результат a3b4c1d2
+Результат a4b3c1d2
 
 
 // Решение ИИ
@@ -109,7 +109,7 @@ public class seminar_2 {
 // решение ИИ
 public class seminar_2 {
     public static void main(String[] args) {
-        String str = "А роза упала на лапу Азора";
+        String str = "довод";
         System.out.println(isPalindrome(str));
     }
 
@@ -119,7 +119,9 @@ public class seminar_2 {
         return str.equals(sb.toString());
     }
 }
+*/
 
+/* 
 // решение в группе
 
 public class seminar_2 {
@@ -194,7 +196,7 @@ public class seminar_2 {
 методом в файл.
 3. Обработайте ошибки с помощью try-catch конструкции. В случае
 возникновения исключения, оно должно записаться в лог-файл
-*/
+
 
 import java.io.File;
 import java.io.FileWriter;
@@ -211,7 +213,7 @@ public class seminar_2 {
         String[] contentFolder = getFileList(System.getProperty("user.dir"));
         writeArrayToFile(contentFolder, fileName);
     }
-
+ 
     static String[] getFileList(String folderName) {
         File currentFolder = new File(folderName);
         return currentFolder.list();
@@ -228,6 +230,7 @@ public class seminar_2 {
             logger.info("Данные успешно записаны");
             } catch (IOException ex) {
             System.err.println(ex.getLocalizedMessage());
+            logger.warning("Ошибка записи в файл");
         }
     }
 
@@ -244,4 +247,64 @@ public class seminar_2 {
         }
     }
 
+}
+*/
+
+/*
+Задание №6
+Напишите метод, который определит тип (расширение) файлов из
+текущей папки и выведет в консоль результат вида
+1 Расширение файла: txt
+2 Расширение файла: pdf
+3 Расширение файла:
+4 Расширение файла: jpg   
+
+Этот код выполняет следующие шаги:
+
+Получает текущую папку с помощью new File(".").
+Получает список файлов в этой папке с помощью метода listFiles().
+Проходит по каждому файлу в списке и для каждого файла определяет его расширение с помощью метода getFileExtension().
+Выводит в консоль номер файла и его расширение.
+Метод getFileExtension(String fileName) возвращает расширение файла, если оно есть, или пустую строку, 
+если файл не имеет расширения или если точка стоит в конце имени файла.
+*/
+
+import java.io.File;
+
+public class seminar_2 {
+    public static void main(String[] args) {
+
+        // Получаем текущую папку
+        File currentDirectory = new File(".");
+
+        // Получаем список файлов в текущей папке
+        File[] filesList = currentDirectory.listFiles();
+        
+        if (filesList != null) {
+            int fileNumber = 1;
+            for (File file : filesList) {
+                if (file.isFile()) {
+                    // Получаем имя файла
+                    String fileName = file.getName();
+                    // Получаем расширение файла
+                    String fileExtension = getFileExtension(fileName);
+                    // Выводим результат в консоль
+                    System.out.println(fileNumber + " Имя файла: " + fileName + " Расширение файла: " + fileExtension);
+                    fileNumber++;
+                }
+            }
+        } else {
+            System.out.println("Текущая папка не содержит файлов.");
+        }
+    }
+
+        // Метод для получения расширения файла
+        private static String getFileExtension(String fileName) {
+            int lastIndexOfDot = fileName.lastIndexOf('.');
+            if (lastIndexOfDot == -1 || lastIndexOfDot == fileName.length() - 1) {
+                // Файл не имеет расширения или точка стоит в конце имени
+                return "";
+            }
+            return fileName.substring(lastIndexOfDot + 1);
+        }
 }

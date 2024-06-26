@@ -267,7 +267,7 @@ public class seminar_2 {
 Выводит в консоль номер файла и его расширение.
 Метод getFileExtension(String fileName) возвращает расширение файла, если оно есть, или пустую строку, 
 если файл не имеет расширения или если точка стоит в конце имени файла.
-*/
+
 
 import java.io.File;
 
@@ -308,3 +308,131 @@ public class seminar_2 {
             return fileName.substring(lastIndexOfDot + 1);
         }
 }
+*/
+
+/*
+HW 1
+Дана строка sql-запроса "select * from students where ". Сформируйте часть WHERE этого запроса,
+используя StringBuilder. Данные для фильтрации приведены ниже в виде json строки.
+Если значение null, то параметр не должен попадать в запрос.
+Параметры для фильтрации: {"name":"Ivanov", "country":"Russia", "city":"Moscow", "age":"null"}
+
+Пример: Строка sql-запроса:
+
+select * from students where 
+
+Параметры для фильтрации:
+
+ {"name":"Ivanov", "country":"Russia", "city":"Moscow", "age":"null"}
+
+Результат:
+
+select * from students where name='Ivanov' and country='Russia' and city='Moscow'
+
+
+Для решения данной задачи на языке программирования Java, необходимо выполнить следующие шаги:
+
+1. Прочитать JSON строку с параметрами.
+2. Распарсить JSON строку и получить значения параметров.
+3. Использовать StringBuilder для формирования части WHERE SQL-запроса, исключая параметры со значением "null".
+Ниже приведён пример кода, который выполняет указанные шаги.
+
+
+import org.json.JSONObject;
+
+public class seminar_2 {
+
+    public static String answer(String QUERY, String PARAMS) {
+        // Инициализация StringBuilder для формирования части WHERE
+        StringBuilder whereClause = new StringBuilder();
+
+        // Преобразование строки JSON в объект JSONObject
+        JSONObject params = new JSONObject(PARAMS);
+
+        // Перебор всех ключей в JSONObject
+        for (String key : params.keySet()) {
+            String value = params.getString(key);
+
+            // Если значение не "null", то добавляем его в запрос
+            if (!"null".equals(value)) {
+                if (whereClause.length() > 0) {
+                    whereClause.append(" and ");
+                }
+                whereClause.append(key).append("='").append(value).append("'");
+            }
+        }
+
+        // Формирование итогового запроса
+        String finalQuery = QUERY + whereClause.toString();
+        return finalQuery;
+    }
+
+    public static void main(String[] args) {
+        String query = "select * from students where ";
+        String params = "{\"name\":\"Ivanov\", \"country\":\"Russia\", \"city\":\"Moscow\", \"age\":\"null\"}";
+
+        String result = answer(query, params);
+        System.out.println(result);
+    }
+}
+*/
+
+/*
+Решение без использования внешних библиотек
+
+Для решения задачи без использования внешней библиотеки org.json.JSONObject мы можем воспользоваться встроенными средствами Java 
+для работы с строками. Мы будем обрабатывать JSON строку вручную, используя метод split и другие методы работы со строками.
+
+Этот код выполняет следующие действия:
+
+1. Метод answer принимает на вход два параметра: начало SQL-запроса QUERY и строку JSON с параметрами PARAMS.
+2. Удаляем фигурные скобки и пробелы в начале и в конце строки JSON.
+3. Разделяем строку на пары ключ-значение, используя метод split с запятой в качестве разделителя.
+4. Для каждой пары ключ-значение:
+    Разделяем пару на ключ и значение, используя метод split с двоеточием в качестве разделителя.
+
+*/
+public class seminar_2 {
+
+    public static String answer(String QUERY, String PARAMS) {
+        // Инициализация StringBuilder для формирования части WHERE
+        StringBuilder whereClause = new StringBuilder();
+
+        // Удаление фигурных скобок и пробелов в начале и в конце строки
+        PARAMS = PARAMS.trim();
+        PARAMS = PARAMS.substring(1, PARAMS.length() - 1);
+
+        // Разделение строки на пары ключ-значение
+        String[] pairs = PARAMS.split(",");
+
+        for (String pair : pairs) {
+            // Разделение каждой пары на ключ и значение
+            String[] keyValue = pair.split(":");
+
+            // Удаление лишних кавычек и пробелов
+            String key = keyValue[0].trim().replaceAll("\"", "");
+            String value = keyValue[1].trim().replaceAll("\"", "");
+
+            // Если значение не "null", то добавляем его в запрос
+            if (!"null".equals(value)) {
+                if (whereClause.length() > 0) {
+                    whereClause.append(" and ");
+                }
+                whereClause.append(key).append("='").append(value).append("'");
+            }
+        }
+
+        // Формирование итогового запроса
+        String finalQuery = QUERY + whereClause.toString();
+        return finalQuery;
+    }
+
+    public static void main(String[] args) {
+        String query = "select * from students where ";
+        String params = "{\"name\":\"Ivanov\", \"country\":\"Russia\", \"city\":\"Moscow\", \"age\":\"null\"}";
+
+        String result = answer(query, params);
+        System.out.println(result);
+    }
+}
+

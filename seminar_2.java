@@ -391,27 +391,39 @@ public class seminar_2 {
 4. Для каждой пары ключ-значение:
     Разделяем пару на ключ и значение, используя метод split с двоеточием в качестве разделителя.
 
-*/
+
 public class seminar_2 {
 
     public static String answer(String QUERY, String PARAMS) {
         // Инициализация StringBuilder для формирования части WHERE
         StringBuilder whereClause = new StringBuilder();
 
+        //System.out.println(PARAMS);
+
         // Удаление фигурных скобок и пробелов в начале и в конце строки
-        PARAMS = PARAMS.trim();
+ 
         PARAMS = PARAMS.substring(1, PARAMS.length() - 1);
+        //System.out.println(PARAMS);
 
         // Разделение строки на пары ключ-значение
         String[] pairs = PARAMS.split(",");
 
+        //Выводим элементы массива строк разбитые по парам ключ : значение (для проверки)
+        for (String pair : pairs) {
+            System.out.println(pair);
+        }
+
+        
+
         for (String pair : pairs) {
             // Разделение каждой пары на ключ и значение
             String[] keyValue = pair.split(":");
-
+     
             // Удаление лишних кавычек и пробелов
             String key = keyValue[0].trim().replaceAll("\"", "");
             String value = keyValue[1].trim().replaceAll("\"", "");
+            //Выводим элементы массива строк без кавычек и двоеточий (для проверки)
+            System.out.printf("%s  %s\n", key, value);
 
             // Если значение не "null", то добавляем его в запрос
             if (!"null".equals(value)) {
@@ -435,4 +447,147 @@ public class seminar_2 {
         System.out.println(result);
     }
 }
+*/
+
+/*
+HW 2
+Сортировка пузырьком с логированием
+
+Реализуйте алгоритм сортировки пузырьком числового массива, результат после каждой итерации запишите в лог-файл.
+
+Напишите свой код в методе sort класса BubbleSort. Метод sort принимает на вход один параметр:
+
+int[] arr - числовой массив
+
+После каждого прохода по массиву ваш код должен делать запись в лог-файл 'log.txt' 
+в формате год-месяц-день час:минуты {массив на данной итерации}. Для логирования использовать логгер logger класса BubbleSort.
+
+Пример
+
+arr = new int[]{9, 4, 8, 3, 1};
+sort(arr)
+
+// При чтении лог-файла получим:
+2023-05-19 07:53 [4, 8, 3, 1, 9]
+2023-05-19 07:53 [4, 3, 1, 8, 9]
+2023-05-19 07:53 [3, 1, 4, 8, 9]
+2023-05-19 07:53 [1, 3, 4, 8, 9]
+2023-05-19 07:53 [1, 3, 4, 8, 9]
+
+Объяснение кода:
+Инициализация лог-файла:
+
+1. Создаем файл log.txt и FileWriter в статическом блоке и устанавливаем режим добавления (true), чтобы сохранять все записи в файл.
+
+2. Метод sort:
+    Реализуем сортировку пузырьком с дополнительной проверкой на необходимость дальнейших итераций (swapped).
+    После каждой итерации внешнего цикла вызываем метод logArrayState для записи состояния массива в лог-файл.
+
+3. Метод logArrayState:
+    Получаем текущую дату и время в нужном формате.
+    Записываем текущее состояние массива в лог-файл.
+
+4. Метод finalize:
+    Закрываем FileWriter при сборке мусора, чтобы убедиться, что все ресурсы освобождены.
+
+Класс Printer:
+    Считывает и выводит содержимое лог-файла после выполнения сортировки.
+
+Запуск и тестирование:
+    Код можно запустить как обычный Java файл.
+    При запуске будет создан лог-файл log.txt, содержащий состояния массива после каждой итерации сортировки.
+
+Этот подход обеспечивает логирование каждой итерации алгоритма сортировки и корректную запись в файл с соответствующими временными метками.
+*/
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.FileReader;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.util.Arrays;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+class BubbleSort {
+    private static File log;
+    private static FileWriter fileWriter;
+    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+
+    static {
+        try {
+            log = new File("bubleSortLog.txt");
+            fileWriter = new FileWriter(log, true); // Append mode
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void sort(int[] arr) {
+        int n = arr.length;
+        boolean swapped;
+        for (int i = 0; i < n - 1; i++) {
+            swapped = false;
+            for (int j = 0; j < n - i - 1; j++) {
+                if (arr[j] > arr[j + 1]) {
+                    // swap arr[j] and arr[j + 1]
+                    int temp = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = temp;
+                    swapped = true;
+                }
+            }
+            // Log the array state after each pass
+            logArrayState(arr);
+            if (!swapped) break; // If no two elements were swapped by inner loop, then break
+        }
+    }
+
+    private static void logArrayState(int[] arr) {
+        try {
+            String currentTime = dateFormat.format(new Date());
+            fileWriter.write(currentTime + " " + Arrays.toString(arr) + "\n");
+            fileWriter.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    protected void finalize() throws Throwable {
+        super.finalize();
+        if (fileWriter != null) {
+            fileWriter.close();
+        }
+    }
+}
+
+// Не удаляйте этот класс - он нужен для вывода результатов на экран и проверки
+public class seminar_2 {
+    public static void main(String[] args) {
+        int[] arr = {};
+        // При отправке кода на Выполнение, вы можете варьировать эти параметры
+        if (args.length == 0) {
+            arr = new int[]{9, 4, 8, 3, 1};
+        } else {
+            arr = Arrays.stream(args[0].split(", "))
+                        .mapToInt(Integer::parseInt)
+                        .toArray();
+        }
+
+        BubbleSort ans = new BubbleSort();
+        ans.sort(arr);
+
+        try (BufferedReader br = new BufferedReader(new FileReader("log.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                System.out.println(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+
 

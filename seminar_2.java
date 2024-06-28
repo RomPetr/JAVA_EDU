@@ -3,9 +3,9 @@
 Дано четное число N (>0) и символы c1 и c2.
 Написать метод, который вернет строку длины N, которая
 состоит из чередующихся символов c1 и c2, начиная с c1. 
+*/
 
-
-import java.security.PublicKey;
+//import java.security.PublicKey;
 
 public class seminar_2 {
     public static void main(String[] args) {
@@ -40,7 +40,7 @@ public class seminar_2 {
         return sb.toString();
     }
 }
-*/
+
 
 /*
 Задание №2

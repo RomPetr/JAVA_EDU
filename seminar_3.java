@@ -12,15 +12,20 @@ import java.util.Random;
 public  class seminar_3 {
     public static void main(String[] args) {
         
+        int count = 10;
         ArrayList<Integer> randomList = new ArrayList<>();
-        Random rnd = new Random();
-
-        for (int i = 0; i < 10; i++) {
-            randomList.add(rnd.nextInt(1, 100));
-        }
+        fillRandomList(randomList, count, 1, 100);
 
         System.out.println("До сортировки: " + randomList);
         Collections.sort(randomList);
         System.out.println("После сортировки: " + randomList);
+    }
+
+    private static void fillRandomList(ArrayList<Integer> randomList, int count, int min, int max) {
+        Random rnd = new Random();
+        
+        for (int i = 0; i < count; i++) {
+            randomList.add(rnd.nextInt(1, 100));
+        }
     }
 }

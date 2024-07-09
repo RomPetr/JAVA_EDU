@@ -1,12 +1,62 @@
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Random;
+import java.util.List;
+
+
+
+/*
+Задание №0
+Даны следующие строки, cравнить их с помощью == и метода equals() класса Object
+ String s1 = "hello";
+ String s2 = "hello";
+ String s3 = s1;
+ String s4 = "h" + "e" + "l" + "l" + "o";
+ String s5 = new String("hello");
+ String s6 = new String(new char[]{'h', 'e', 'l', 'l', 'o'});
+
+
+
+public class seminar_3 {
+    public static void main(String[] args) {
+        String s1 = "hello";
+        String s2 = "hello";
+        String s3 = s1;
+        String s4 = "h" + "e" + "l" + "l" + "o";
+        String s5 = new String("hello");
+        String s6 = new String(new char[]{'h', 'e', 'l', 'l', 'o'});
+
+        System.out.println(s1 == s2);
+        System.out.println(s1.equals(s2));
+
+        System.out.println();
+
+        System.out.println(s1 == s3);
+        System.out.println(s1.equals(s3));
+
+        System.out.println();
+
+        System.out.println(s1 == s4);
+        System.out.println(s1.equals(s4));
+
+        System.out.println();
+
+        System.out.println(s1 == s5);
+        System.out.println(s1.equals(s5));
+
+        System.out.println();
+
+        System.out.println(s1 == s6);
+        System.out.println(s1.equals(s6));
+    }
+}
+*/
+
 /*
 Задание №1
 Заполнить список десятью случайными числами.
 Отсортировать список методом sort() и вывести его на экран.
-*/
+
 
 
 public  class seminar_3 {
@@ -27,5 +77,58 @@ public  class seminar_3 {
         for (int i = 0; i < count; i++) {
             randomList.add(rnd.nextInt(1, 100));
         }
+    }
+}
+*/
+
+/*
+Задание №2.1
+ Заполнить список названиями планет Солнечной системы в произвольном порядке с повторениями.
+ Вывести название каждой планеты и количество его повторений в списке.
+*/
+
+public class seminar_3 {
+    public static void main(String[] args) {
+        List<String> planets = planetList();
+        uniquePlanetCount(planets);
+        
+    }
+
+    private static List<String> planetList() {
+        List<String> planets = new ArrayList<>();
+        planets.add("Mars");
+        planets.add("Earth");
+        planets.add("Jupiter");
+        planets.add("Venus");
+        planets.add("Neptune");
+        planets.add("Saturn");
+        planets.add("Uranus");
+        planets.add("Mercury");
+        planets.add("Earth");
+        planets.add("Jupiter");
+        planets.add("Venus");
+        planets.add("Neptune");
+        planets.add("Earth");
+        planets.add("Venus");
+        return planets;
+    }
+
+    private  static  void uniquePlanetCount(List<String> planets) {
+        List<String> sortedPlanets = new ArrayList<>(planets);
+        Collections.sort(sortedPlanets);
+        int count = 1;
+        String currentPlanet = sortedPlanets.get(0);
+
+        for(int i = 0; i < sortedPlanets.size(); i++) {
+            if(sortedPlanets.get(i).equals(currentPlanet)) {
+                count++;
+            } else {
+                System.out.println(currentPlanet +": "+ count);
+                count = 1;
+                currentPlanet = sortedPlanets.get(i);
+            }
+
+        }
+        System.out.println(currentPlanet +": "+ count);
     }
 }

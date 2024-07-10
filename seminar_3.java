@@ -1,6 +1,7 @@
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 
@@ -170,7 +171,8 @@ public class seminar_3 {
 public class seminar_3 {
     public static void main(String[] args) {
         List<String> lst = new ArrayList<>(Arrays.asList("One", "Two", "three", "1", "2", "Hello", "-10", "кто тут?"));
-        deleteInt(lst);
+        //deleteInt(lst);
+        deleteIntIterator(lst);
         System.out.println(lst);
     }
 
@@ -188,6 +190,17 @@ public class seminar_3 {
             if(isInt(lst.get(i))) {
                 lst.remove(i);
                 i--;
+            }
+        }
+    }
+
+    // с помощью итератора
+    private static void deleteIntIterator (List<String> lst) {
+        Iterator<String> iter = lst.iterator();
+        while (iter.hasNext()) {
+            String elem = iter.next();
+            if(isInt(elem)) {
+                iter.remove();
             }
         }
     }

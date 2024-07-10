@@ -85,19 +85,29 @@ public  class seminar_3 {
 Задание №2.1
  Заполнить список названиями планет Солнечной системы в произвольном порядке с повторениями.
  Вывести название каждой планеты и количество его повторений в списке.
-*/
+
+Задание №2.2 (если выполнено предыдущее задание)
+Пройти по списку из предыдущего задания и удалить повторяющиеся элементы.
+
 
 public class seminar_3 {
     public static void main(String[] args) {
         List<String> planets = planetList();
         uniquePlanetCount(planets);
+        deleteRepeatPlanet(planets);
+        System.out.println(planets);
         
     }
 
     private static List<String> planetList() {
         List<String> planets = new ArrayList<>();
         planets.add("Mars");
+        planets.add("Mars");
         planets.add("Earth");
+        planets.add("Earth");
+        planets.add("Earth");
+        planets.add("Jupiter");
+        planets.add("Jupiter");
         planets.add("Jupiter");
         planets.add("Venus");
         planets.add("Neptune");
@@ -116,10 +126,13 @@ public class seminar_3 {
     private  static  void uniquePlanetCount(List<String> planets) {
         List<String> sortedPlanets = new ArrayList<>(planets);
         Collections.sort(sortedPlanets);
+        // for(int i = 0; i < sortedPlanets.size(); i++) {
+        //     System.out.println(sortedPlanets.get(i));
+        // }
         int count = 1;
         String currentPlanet = sortedPlanets.get(0);
 
-        for(int i = 0; i < sortedPlanets.size(); i++) {
+        for(int i = 1; i < sortedPlanets.size(); i++) {
             if(sortedPlanets.get(i).equals(currentPlanet)) {
                 count++;
             } else {
@@ -131,4 +144,26 @@ public class seminar_3 {
         }
         System.out.println(currentPlanet +": "+ count);
     }
+
+    private static void deleteRepeatPlanet(List<String> planets) {
+        for (int i = 0; i < planets.size(); i++) {
+            String currentPlanet = planets.get(i);
+            for (int j = planets.size() - 1; j > i; j--) {
+                if(planets.get(j).equals(currentPlanet)) {
+                    planets.remove(j);
+                }
+            }
+        }
+
+    }
 }
+*/
+
+
+/*
+Задание №3
+ Создать список типа ArrayList<String>.
+ Поместить в него как строки, так и целые числа.
+ Пройти по списку, найти и удалить целые числа. 
+*/
+
